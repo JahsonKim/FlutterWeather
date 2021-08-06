@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'moredetails.dart';
 
 class MyCity extends StatefulWidget {
-  const MyCity({Key key}) : super(key: key);
-
+  const MyCity(this.data,{Key key}) : super(key: key);
+ final dynamic data;
   @override
   _MyCityState createState() => _MyCityState();
 }
@@ -22,31 +22,50 @@ class _MyCityState extends State<MyCity> {
         padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
-            SizedBox(height: 40,),
+
             Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children:[
 
                   Icon(Icons.my_location, size: 32,color: Colors.blueAccent,),
                   SizedBox(width: 8,),
-                  Text("Your Location Now",
+                  Text(widget.data['timezone'].toString(),
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 16,
                     ),),
                 ]),
             SizedBox(height: 10,),
-            Text("SanFransisco,California ,USA",
+            Text("Nairobi,Kenya",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18,
               ),),
             SizedBox(height: 16,),
-            Icon(Icons.nightlight_round,size: 200,color: Color(0xffD4A0D6),),
+            Icon(Icons.nightlight_round,size: 150,color: Color(0xffD4A0D6),),
             SizedBox(height: 16,),
-            Text("Moonlight",style: TextStyle( color: Colors.white,backgroundColor: Color(0xff6152C8),),),
+            Card(
+              elevation: 0,
+              color: Colors.deepPurpleAccent,
+              shape:RoundedRectangleBorder(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(18.0),
+                ),
+              ),
+              child: Container(
+                padding: EdgeInsets.all(5),
+                height: 28,
+                child:
+                Text(
+                  widget.data['current']['weather'][0]['main'],
+                  style: TextStyle(
+                    color: Color(0xffc4dbf3),
+                    fontSize: 15,
+                  ),
+                ),),
+            ),
             SizedBox(height: 16,),
-            Text(" 20 C",style: TextStyle( color: Colors.white, fontSize: 45) ),
+            Text((widget.data['current']['temp']-272).toInt().toString()+" \u00B0",style: TextStyle( color: Colors.white, fontSize: 45) ),
             SizedBox(height: 30,),
 
             Row(
@@ -60,7 +79,7 @@ class _MyCityState extends State<MyCity> {
                   ),
                     SizedBox(width: 8,) ,
                     Text(
-                      "5km/hr",
+                      widget.data['current']['wind_speed'].toString(),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 14,
@@ -74,7 +93,7 @@ class _MyCityState extends State<MyCity> {
                   ),
                     SizedBox(width: 8,) ,
                     Text(
-                      "7%",
+                      widget.data['current']['uvi'].toString(),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 25,
@@ -89,7 +108,7 @@ class _MyCityState extends State<MyCity> {
                   ),
                     SizedBox(width: 8,) ,
                     Text(
-                      "0.555 km/hr",
+                      widget.data['current']['clouds'].toString(),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 14,
@@ -128,7 +147,7 @@ class _MyCityState extends State<MyCity> {
                     ),
                     Row(
                       children: [
-                        Text("Celcius",style: TextStyle(color: Colors.white, ),),
+                        Text("m/s",style: TextStyle(color: Colors.white, ),),
                         Icon(Icons.arrow_forward_ios_outlined,size: 12,color: Colors.white,)
                       ],),
                   ],

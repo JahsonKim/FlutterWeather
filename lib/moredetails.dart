@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class MoreDetails extends StatefulWidget {
-  const MoreDetails({Key key}) : super(key: key);
+  const MoreDetails(this.data, {Key key}) : super(key: key);
+  final dynamic data;
 
   @override
   _MoreDetailsState createState() => _MoreDetailsState();
@@ -11,214 +12,306 @@ class _MoreDetailsState extends State<MoreDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:  Color(0xff0c1b2a),
+      backgroundColor: Color(0xff0c1b2a),
 
       body: Container(
-        margin: EdgeInsets.all(12),
-      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 15),
-      child: Column(
+          margin: EdgeInsets.all(12),
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+          child: CustomScrollView(
+            slivers: [
+              SliverList(
+                  delegate: SliverChildListDelegate([
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Card(
+                            color: Color(0xff0c1b2a),
 
-        children: [
-          SizedBox(height: 40,),
-         Row(
-           children: [
-             Expanded(child:
-         Card(
-            color:  Color(0xff0c1b2a),
+                            // margin: EdgeInsets.symmetric(horizontal: 8,vertical: 6),
+                            child: Container(
+                                //height: MediaQuery.of(context).size.height,
+                                width: 180,
+                                height: 180,
 
-           // margin: EdgeInsets.symmetric(horizontal: 8,vertical: 6),
-              child: Container(
-                //height: MediaQuery.of(context).size.height,
-                width: 180,
-                 height: 180,
+                                //margin: EdgeInsets.all(10),
+                                // color: Colors.deepOrange,
+                                //padding: EdgeInsets.all(10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  //mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    //First item
+                                    Text(
+                                      "Nairobi",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    //end of first item
+                                    SizedBox(
+                                      height: 12,
+                                    ),
+                                    Text(
+                                        (widget.data['current']['temp']-272).toInt().toString()+" \u00B0",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 40,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 17,
+                                    ),
+                                    Card(
+                                      elevation: 0,
+                                      color: Colors.deepPurpleAccent,
+                                      shape:RoundedRectangleBorder(
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(18.0),
+                                        ),
+                                      ),
+                                      child: Container(
+                                        padding: EdgeInsets.all(5),
+                                      height: 28,
+                                      child:
+                                      Text(
+                                        widget.data['current']['weather'][0]
+                                        ['description'],
+                                        style: TextStyle(
+                                          color: Color(0xffc4dbf3),
+                                          fontSize: 15,
+                                        ),
+                                      ),),
+                                    )
 
-                 //margin: EdgeInsets.all(10),
-                  // color: Colors.deepOrange,
-                 //padding: EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    //mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      //First item
-                         Text(
-                                "San Fransisco",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                ),
-                              ),
-                      //end of first item
-                      SizedBox(height: 12,) ,
-                      Text(
-                        "18",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 60,
+                                  ],
+                                )),
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 20,),
-                      Text(
-                        "Cloudy",
-                        style: TextStyle(
-                          color: Color(0xffc4dbf3),
-                          backgroundColor: Color(0xffD4A0D6),
-                          fontSize: 20,
+                        Icon(
+                          Icons.cloud,
+                          color: Color(0xB55B2FA1),
+                          size: 175,
                         ),
-                      ),
-                    ],
-                  )),
-            ),),
-           Icon(
-             Icons.cloud,color: Color(0xff1a446f),
-             size: 175,
-           ),],),
-          SizedBox(height: 30,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [Icon(
-                  Icons.cloud,color: Color(0xffc4dbf3),
-                  size: 20,
-                ),
-                  SizedBox(width: 10,) ,
-                  Text(
-                    "13%",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
+                      ],
                     ),
-                  ),],),
+                    SizedBox(
+                      height: 27,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.cloud,
+                              color: Color(0xffc4dbf3),
+                              size: 20,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              widget.data['current']['wind_speed'].toString(),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.grain_rounded,
+                              color: Color(0xffc4dbf3),
+                              size: 20,
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Text(
+                              widget.data['current']['pressure'].toString(),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                              ),
+                            )
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Icon(
+                              Icons.grain_rounded,
+                              color: Color(0xffc4dbf3),
+                              size: 20,
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Text(
+                              widget.data['current']['humidity'].toString(),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.grain_rounded,
+                          color: Color(0xffc4dbf3),
+                          size: 18,
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          "07.00 AM",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Icon(
+                          Icons.grain_rounded,
+                          color: Color(0xffc4dbf3),
+                          size: 18,
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          "06.00 PM",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 27,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Today",
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 15),
+                  ],
+                ),
+              ])),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [ Icon(
-                  Icons.grain_rounded,color: Color(0xffc4dbf3),
-                  size: 20,
-                ), SizedBox(width: 8,) ,Text(
-                  "0.5333",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
+              SliverToBoxAdapter(
+                child: Container(
+                  height: 110,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemCount: 24,
+
+                      itemBuilder: (BuildContext context, int index) {
+                       return Padding(
+                            padding: index != 23
+                                ? const EdgeInsets.fromLTRB(5, 0, 25, 0)
+                                : const EdgeInsets.only(left: 4),
+                        child: Column(
+                         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //crossAxisAlignment: CrossAxisAlignment.,
+                          children: [
+                            Text(
+                              index.toString() + " Am",
+                              style: TextStyle(color: Colors.white, ),
+                            ),
+                            SizedBox(
+                              height: 12,
+                            ),
+                            Icon(
+                              Icons.cloud_rounded,
+                              color: Colors.deepPurpleAccent,
+                              size: 20,
+                            ),
+                            SizedBox(
+                              height: 12,
+                            ),
+                            Text(
+                              (widget.data['hourly'][index]['temp']-272).toInt().toString()+" \u00B0",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 15),
+                            ),
+
+                          ],
+                        ),
+                        );
+                      },),
+                ),
+              ),
+
+              SliverList(delegate: SliverChildBuilderDelegate(  (BuildContext context ,int i){
+                return Card(
+                  elevation: 0,
+                  color: Color(0xff0c1b2a),
+                  child: Container(
+                    height: 40,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Wednesday",
+                          style: TextStyle(
+                            color: Colors.white60,
+                          ),
+                        ),
+                        Icon(
+                          Icons.cloud_circle_outlined,
+                          size: 25,
+                          color: Colors.deepPurpleAccent,
+                        ),
+                        Text(
+                            (widget.data['daily'][i]['temp']['day']-272).toInt().toString()+" \u00B0",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        Text(
+                          (widget.data['daily'][i]['temp']['day']-274).toInt().toString()+" \u00B0",
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                )],),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [ Icon(
-                  Icons.grain_rounded,color: Color(0xffc4dbf3),
-                  size: 20,
-                ), SizedBox(width: 8,) ,Text(
-                  "5Km/Hr",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                  ),
-                )],)
+                );
+              },childCount: widget.data['daily'].length),),
             ],
-          ),
-          SizedBox(height: 30,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [ Icon(
-              Icons.grain_rounded,color: Color(0xffc4dbf3),
-              size: 18,
-            ), SizedBox(width: 8,) ,Text(
-              "07.00 AM",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-              ),
-            )],),
-          SizedBox(height: 20,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [ Icon(
-              Icons.grain_rounded,color: Color(0xffc4dbf3),
-              size: 18,
-            ), SizedBox(width: 8,) ,Text(
-              "06.00 PM",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-              ),
-            )],),
-          SizedBox(height: 35,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text("Today",style: TextStyle(color: Colors.white),),
-            ],
-          ),
-          SizedBox(height: 10,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-              children:[ Text("10AM", style: TextStyle(color: Colors.white),),SizedBox(height: 10,),
-              Icon(Icons.cloud_done_outlined,color: Colors.grey,size: 30,),SizedBox(height: 10,),Text("19",style: TextStyle(color:Colors.white,fontSize: 20),),]
-              ),
-              Column(
-                  children:[ Text("11AM",style: TextStyle(color: Colors.white),),SizedBox(height: 10,),
-                    Icon(Icons.cloud_done_outlined,color: Colors.grey,size: 30,),SizedBox(height: 10,),Text("19",style: TextStyle(color:Colors.white,fontSize: 20),),]
-              ),
-              Column(
-                  children:[ Text("12AM",style: TextStyle(color: Colors.white),),SizedBox(height: 10,),
-                    Icon(Icons.cloud_done_outlined,color: Colors.grey,size: 30,),SizedBox(height: 10,),Text("19",style: TextStyle(color:Colors.white,fontSize: 20),),]
-              ),
-              Column(
-                  children:[ Text("1PM",style: TextStyle(color: Colors.white),),SizedBox(height: 10,),
-                    Icon(Icons.cloud_done_outlined,color: Colors.grey,size: 30,),SizedBox(height: 10,),Text("19",style: TextStyle(color:Colors.white,fontSize: 20),),]
-              ),
-              Column(
-                  children:[ Text("2PM",style: TextStyle(color: Colors.white),),SizedBox(height: 10,),
-                    Icon(Icons.cloud_done_outlined,color: Colors.grey,size: 30,),SizedBox(height: 10,),Text("19",style: TextStyle(color:Colors.white,fontSize: 20),),]
-              ),
-            ],
-          ),
-SizedBox(height:30),
-          Card(
-            color: Color(0xff0c1b2a),
-          child: Container(
-            height: 40,
-            child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-             Text("Tuesday",style: TextStyle(color: Colors.white,),),
-              Icon(Icons.cloud_circle_outlined ,size: 30,color:Color(0xffD4A0D6),),
-              Text("19",style: TextStyle(color: Colors.white,),),
-              Text("17",style: TextStyle(color: Colors.grey,),),
-            ],
-          ),),),
-          SizedBox(height: 20,),
-          Card(
-            color: Color(0xff0c1b2a),
-          child: Container(
-            height: 40,
-            child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Wednesday",style: TextStyle(color: Colors.white,),),
-              Icon(Icons.cloud_circle_outlined ,size: 30,color:Color(0xffD4A0D6),),
-              Text("19",style: TextStyle(color: Colors.white,),),
-              Text("17",style: TextStyle(color: Colors.grey,),),
-            ],
-          ),),),
-          SizedBox(height: 20,),
-          Card(
-            color: Color(0xff0c1b2a),
-            child: Container(
-              height: 40,
-            child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Thursday",style: TextStyle(color: Colors.white,),),
-              Icon(Icons.cloud_circle_outlined ,size: 30,color:Color(0xffD4A0D6),),
-              Text("19",style: TextStyle(color: Colors.white,),),
-              Text("17",style: TextStyle(color: Colors.grey,),),
-            ],
-          ),),),
-        ],),),
+          )),
 
       // Wrap(children: [
       //   Card(
@@ -757,7 +850,6 @@ SizedBox(height:30),
       //   ),
       // ],),
       // This trailing comma makes auto-formatting nicer for build methods.
-
     );
   }
 }
